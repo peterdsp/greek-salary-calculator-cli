@@ -1,7 +1,8 @@
 from flask import Flask, request, jsonify
-from net_salary_calculator import calculate_net_salary
+from ng_salary_calculator import calculate_net_salary
 
 app = Flask(__name__)
+
 
 @app.route('/calculate_net_salary', methods=['POST'])
 def calculate_net_salary_endpoint():
@@ -18,13 +19,15 @@ def calculate_net_salary_endpoint():
     except ValueError:
         return jsonify({"error": "Invalid input types"}), 400
 
-    net_monthly_salary, net_annual_salary, annual_gross_salary = calculate_net_salary(gross_monthly_salary, num_children)
+    net_monthly_salary, net_annual_salary, annual_gross_salary = calculate_net_salary(
+        gross_monthly_salary, num_children)
     return jsonify({
         "gross_monthly_salary": gross_monthly_salary,
         "gross_annual_salary": annual_gross_salary,
         "net_monthly_salary": net_monthly_salary,
         "net_annual_salary": net_annual_salary
     })
+
 
 if __name__ == '__main__':
     app.run(debug=True)
